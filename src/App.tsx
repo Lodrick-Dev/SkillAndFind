@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import "./App.css";
+import { ToastContainer } from "react-toastify";
+import Home from "./Home/Home";
+import { COLORS } from "./styles/styles";
+import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+import Loading from "./Loading/Loading";
 
 function App() {
+  const [loader, setLoader] = useState<boolean>(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledApp className="App">
+      <Home setLoader={setLoader} />
+      <ToastContainer position="bottom-center" />
+      {loader && <Loading />}
+    </StyledApp>
   );
 }
 
 export default App;
+
+const StyledApp = styled.div`
+  /* background: ${COLORS.light}; */
+  background: ${COLORS.dark};
+  padding: 10px;
+  height: 110vh;
+`;
