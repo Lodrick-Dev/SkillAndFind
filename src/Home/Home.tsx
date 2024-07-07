@@ -58,7 +58,7 @@ const StyledHome = styled.div`
     }
   }
   .icon-bot {
-    color: ${COLORS.second};
+    color: ${COLORS.blue};
     font-size: 2.1em;
     cursor: pointer;
   }
@@ -68,6 +68,8 @@ const StyledHome = styled.div`
     font-size: 0.8em;
   }
   .info-bottom {
-    margin-top: 10px;
+    padding-top: 10px;
+    border-top: solid 2px ${COLORS.second};
+    margin-top: 35px;
   }
 `;

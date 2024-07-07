@@ -88,7 +88,7 @@ const UploadCv = ({ setJobs, setDisplayresult, setLoader }: PropsUploadCv) => {
       </div>
       {readyAnalyse && (
         <div>
-          <span>{nameFile}</span>
+          <p className="name-file">{nameFile}</p>
           <Button text="L'analyse de l'IA" actionClick={handleSub} />
         </div>
       )}
@@ -107,6 +107,14 @@ const StyledUploadCv = styled.form`
     color: ${COLORS.light};
     font-size: 0.6em;
     margin-top: 10px;
+  }
+  .name-file {
+    font-size: 0.7em;
+    border-radius: 3px;
+    color: ${COLORS.second};
+    /* background: ${COLORS.second}; */
+    border-bottom: solid 2px ${COLORS.second};
+    margin-bottom: 15px;
   }
   .div-cv-upload > .icon-download {
     cursor: pointer;
