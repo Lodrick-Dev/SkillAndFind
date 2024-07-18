@@ -6,6 +6,7 @@ const Loading = () => {
   return (
     <StyledLoading>
       <div className="box-before-loader">
+        <span>Analyse en cours...</span>
         <span className="loader"></span>
       </div>
     </StyledLoading>
@@ -29,11 +30,18 @@ const StyledLoading = styled.div`
     height: 100%;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     /* background: blueviolet; */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    span {
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.5em;
+      color: ${COLORS.light};
+    }
   }
   .loader {
     width: 84px;

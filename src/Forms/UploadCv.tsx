@@ -81,11 +81,12 @@ const UploadCv = ({ setJobs, setDisplayresult, setLoader }: PropsUploadCv) => {
   return (
     <StyledUploadCv>
       <h2>Charger votre Cv</h2>
-      <span>Format PDF uniquement</span>
+      <span className="spann">Format PDF uniquement - 1 Mo max</span>
       <div className="div-cv-upload">
         <FaDownload onClick={handleIconClick} className="icon-download" />
         <input type="file" ref={cvInput} onChange={handleUploadCv} />
       </div>
+      <span>Limite : 2 analyses</span>
       {readyAnalyse && (
         <div>
           <p className="name-file">{nameFile}</p>
@@ -102,9 +103,9 @@ const StyledUploadCv = styled.form`
   h2 {
     color: ${COLORS.light};
   }
-  span {
+  .spann {
     display: block;
-    color: ${COLORS.light};
+    color: ${COLORS.second};
     font-size: 0.6em;
     margin-top: 10px;
   }
