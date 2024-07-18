@@ -47,9 +47,6 @@ const FranceTravail = ({ job, setJob, setMatchJobs }: PropsFranceTravail) => {
           sanitizedJob ? sanitizedJob : job
         }/${departement}`,
       });
-      console.log(res);
-      console.log(job);
-      console.log(sanitizedJob);
 
       if (res.data === "") {
         // setMatchJobs([]);
