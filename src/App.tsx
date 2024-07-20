@@ -10,11 +10,13 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import PopFooter from "./Footer/PopFooter";
 import PopUp from "./PopUp/PopUp";
+import { Dynamic } from "./Context/ContextDynamic";
 
 function App() {
-  const [loader, setLoader] = useState<boolean>(false);
+  // const [loader, setLoader] = useState<boolean>(false);
   const [popFooter, setPopFooter] = useState<string>();
   const [cookiePop, setCookiePop] = useState<boolean>(false);
+  const { loader } = Dynamic();
   const checkIfAccept = () => {
     const nameEQ = "acceptSkillXp" + "=";
     const ca = document.cookie.split(";");
@@ -33,7 +35,7 @@ function App() {
   return (
     <StyledApp className="App">
       <Header />
-      <Home setLoader={setLoader} />
+      <Home />
       <ToastContainer position="bottom-center" />
       {loader && <Loading />}
       {popFooter && (

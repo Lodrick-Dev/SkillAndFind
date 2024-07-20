@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <FaWpexplorer className="icon-header-logo" />
-      <h1>{process.env.REACT_APP_NAME}</h1>
+      <h1>{process.env.REACT_APP_NAME} - IA</h1>
     </StyledHeader>
   );
 };

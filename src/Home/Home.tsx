@@ -1,17 +1,21 @@
 import styled from "styled-components";
 import UploadCv from "../Forms/UploadCv";
 import { useState } from "react";
-import { PropsHome, StateJobsAi } from "../Types/Types";
+import { StateJobsAi } from "../Types/Types";
 import { FaRobot } from "react-icons/fa6";
 import { COLORS } from "../styles/styles";
 import ResultCv from "../IA/ResultCv";
 import Button from "../Button/Button";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { Dynamic } from "../Context/ContextDynamic";
+import UploadCvTwo from "../Forms/UploadCvTwo";
+import ReponseJobTarget from "../IA/ReponseJobTarget";
 
-const Home = ({ setLoader }: PropsHome) => {
+const Home = () => {
   const [jobs, setJobs] = useState<StateJobsAi[]>([]);
   const [displayResult, setDisplayresult] = useState<boolean>(false);
+  const { setLoader, responseTargetJob } = Dynamic();
   const downloadResult = async () => {
     setLoader(true);
     try {
@@ -41,8 +45,8 @@ const Home = ({ setLoader }: PropsHome) => {
   return (
     <StyledHome>
       <h1>
-        Découvrez les métiers qui vous correspondent avec{" "}
-        <span>{process.env.REACT_APP_NAME}</span>
+        Explorez <span>{process.env.REACT_APP_NAME}</span> pour découvrir des
+        suggestions de métiers adaptés à votre profil et bien plus encore
       </h1>
       <FaRobot
         className="icon-bot"
@@ -52,13 +56,15 @@ const Home = ({ setLoader }: PropsHome) => {
         }}
       />
       {!displayResult ? (
-        <UploadCv
-          setJobs={setJobs}
-          setDisplayresult={setDisplayresult}
-          setLoader={setLoader}
-        />
+        <>
+          <UploadCv setJobs={setJobs} setDisplayresult={setDisplayresult} />
+          <UploadCvTwo />
+        </>
       ) : (
         <ResultCv jobs={jobs} />
+      )}
+      {responseTargetJob && responseTargetJob.length > 0 && (
+        <ReponseJobTarget />
       )}
       {!displayResult && (
         <>
@@ -93,7 +99,7 @@ const StyledHome = styled.div`
   height: 100%;
   /* background: pink; */
   h1 {
-    margin: 10px auto;
+    margin: 20px auto;
     color: ${COLORS.light};
     span {
       /* background: ${COLORS.dark}; */
@@ -114,7 +120,7 @@ const StyledHome = styled.div`
   }
   .info-bottom {
     padding: 10px;
-    border-top: solid 2px ${COLORS.second};
+    /* border-top: solid 2px ${COLORS.second}; */
     margin-top: 10px;
   }
   .search-span {

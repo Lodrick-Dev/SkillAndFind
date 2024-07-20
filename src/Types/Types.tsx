@@ -37,7 +37,6 @@ export type PropsUploadCv = {
       >
     | React.Dispatch<React.SetStateAction<StateJobsAi[]>>;
   setDisplayresult: React.Dispatch<React.SetStateAction<boolean>>;
-  setLoader: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type PropsButton = {
@@ -50,9 +49,9 @@ export type PropsResultCv = {
   // jobs: StateJob;
 };
 
-export type PropsHome = {
-  setLoader: React.Dispatch<React.SetStateAction<boolean>>;
-};
+// export type PropsHome = {
+//   setLoader: React.Dispatch<React.SetStateAction<boolean>>;
+// };
 
 export type PropsFranceTravail = {
   job: string | StateJob | undefined;

@@ -6,12 +6,14 @@ import Button from "../Button/Button";
 import { COLORS } from "../styles/styles";
 import { toast } from "react-toastify";
 import axios, { AxiosRequestConfig } from "axios";
+import { Dynamic } from "../Context/ContextDynamic";
 
-const UploadCv = ({ setJobs, setDisplayresult, setLoader }: PropsUploadCv) => {
+const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
   const cvInput = useRef<HTMLInputElement>(null);
   const [cvUpload, setCvUpload] = useState<File | null>(null);
   const [nameFile, setNameFile] = useState<string>("");
   const [readyAnalyse, setReadyAnalyse] = useState<boolean>(false);
+  const { setLoader } = Dynamic();
   const handleIconClick = () => {
     cvInput.current?.click();
   };
@@ -80,17 +82,19 @@ const UploadCv = ({ setJobs, setDisplayresult, setLoader }: PropsUploadCv) => {
   };
   return (
     <StyledUploadCv>
-      <h2>Charger votre Cv</h2>
-      <span className="spann">Format PDF uniquement - 1 Mo max</span>
+      <h2>Découvrez les métiers qui vous correspondent + recherche d'offres</h2>
+      <span className="spann">
+        Charger votre Cv | Format PDF uniquement - 1 Mo max
+      </span>
+      <span>Limite : 2 analyses</span>
       <div className="div-cv-upload">
         <FaDownload onClick={handleIconClick} className="icon-download" />
         <input type="file" ref={cvInput} onChange={handleUploadCv} />
       </div>
-      <span>Limite : 2 analyses</span>
       {readyAnalyse && (
         <div>
           <p className="name-file">{nameFile}</p>
-          <Button text="L'analyse de l'IA" actionClick={handleSub} />
+          <Button text="Lancez l'analyse" actionClick={handleSub} />
         </div>
       )}
     </StyledUploadCv>
@@ -99,7 +103,9 @@ const UploadCv = ({ setJobs, setDisplayresult, setLoader }: PropsUploadCv) => {
 
 export default UploadCv;
 const StyledUploadCv = styled.form`
-  margin-top: 10px;
+  margin-top: 25px;
+  padding-bottom: 20px;
+  border-bottom: solid 2px ${COLORS.second};
   h2 {
     color: ${COLORS.light};
   }
@@ -114,16 +120,22 @@ const StyledUploadCv = styled.form`
     border-radius: 3px;
     color: ${COLORS.second};
     /* background: ${COLORS.second}; */
-    border-bottom: solid 2px ${COLORS.second};
-    margin-bottom: 15px;
+    /* border-bottom: solid 2px ${COLORS.second}; */
+    /* margin-bottom: 15px; */
   }
   .div-cv-upload > .icon-download {
     cursor: pointer;
-    margin: 10px auto 50px;
+    margin-top: 10px;
     font-size: 3.2em;
     color: ${COLORS.blue};
   }
   .div-cv-upload > input {
     display: none;
+  }
+  //width =< 425px
+  @media screen and (max-width: 428px) {
+    h2 {
+      font-size: 1.3em;
+    }
   }
 `;
