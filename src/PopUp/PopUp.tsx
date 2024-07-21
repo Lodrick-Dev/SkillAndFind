@@ -35,10 +35,10 @@ const StyledPopUp = styled.div`
   background: ${COLORS.transparent};
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  position: absolute;
+  position: fixed;
   z-index: 13;
-  height: 50vh;
-  width: 70%;
+  height: 100vh;
+  width: 100%;
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);
@@ -57,12 +57,21 @@ const StyledPopUp = styled.div`
       border: none;
       border-radius: 3px;
       background: ${COLORS.blue};
+      color: ${COLORS.light};
       font-size: 1em;
       padding: 3px;
       cursor: pointer;
     }
     .red-btn {
       background: ${COLORS.second} !important;
+    }
+  }
+  //width =< 42px
+  @media screen and (max-width: 428px) {
+    width: 100%;
+    height: 100vh;
+    > div {
+      padding: 20px;
     }
   }
 `;
