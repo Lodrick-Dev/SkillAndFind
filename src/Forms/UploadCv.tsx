@@ -86,7 +86,7 @@ const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
       <span className="spann">
         Charger votre Cv | Format PDF uniquement - 1 Mo max
       </span>
-      <span>Limite : 2 analyses</span>
+      {/* <span>Limite : 2 analyses</span> */}
       <div className="div-cv-upload">
         <FaDownload onClick={handleIconClick} className="icon-download" />
         <input type="file" ref={cvInput} onChange={handleUploadCv} />

@@ -90,7 +90,7 @@ const UploadCvTwo = () => {
     <StyledUploadCvTwo>
       <h2>Vérifiez si votre cv est correcte pour le poste visé</h2>
       <span className="spann">Format PDF uniquement - 1 Mo max</span>
-      <span>Limite : 2 vérifications</span>
+      {/* <span>Limite : 2 vérifications</span> */}
       <div className="div-cv-uploadtwo">
         <input
           type="text"
