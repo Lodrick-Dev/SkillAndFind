@@ -7,7 +7,7 @@ const ReponseJobTarget = () => {
   const { responseTargetJob } = Dynamic();
   return (
     <StyledReponseTargetJob>
-      <span>*Générer par l'IA qui fait de son mieux</span>
+      <span className="info-ia">*Générer par l'IA qui fait de son mieux</span>
       <ul>
         {responseTargetJob &&
           responseTargetJob.length &&
@@ -39,7 +39,7 @@ const StyledReponseTargetJob = styled.div`
   border-radius: 5px;
   margin-bottom: 40px;
   width: 70%;
-  span {
+  .info-ia {
     display: block;
     text-align: left;
     width: 100%;
