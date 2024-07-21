@@ -11,6 +11,8 @@ export type TypeContextDynamic = {
   setUser: React.Dispatch<React.SetStateAction<null>>;
   loader: boolean;
   setLoader: React.Dispatch<React.SetStateAction<boolean>>;
+  sendLoaderMail: boolean;
+  setSendLoaderMail: React.Dispatch<React.SetStateAction<boolean>>;
   responseTargetJob: StateResponseTargetJob[];
   setResponseTargetJob: React.Dispatch<
     React.SetStateAction<StateResponseTargetJob[]>

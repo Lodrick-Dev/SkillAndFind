@@ -1,13 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Dynamic } from "../Context/ContextDynamic";
 import { COLORS } from "../styles/styles";
 
 const ReponseJobTarget = () => {
   const { responseTargetJob } = Dynamic();
-  useEffect(() => {
-    console.log(responseTargetJob);
-  }, []);
   return (
     <StyledReponseTargetJob>
       <span>*Générer par l'IA qui fait de son mieux</span>

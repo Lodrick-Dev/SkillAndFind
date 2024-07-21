@@ -11,12 +11,15 @@ import Footer from "./Footer/Footer";
 import PopFooter from "./Footer/PopFooter";
 import PopUp from "./PopUp/PopUp";
 import { Dynamic } from "./Context/ContextDynamic";
+import Avis from "./Forms/Avis";
+import SendLoaderMail from "./Loading/SendLoaderMail";
 
 function App() {
   // const [loader, setLoader] = useState<boolean>(false);
   const [popFooter, setPopFooter] = useState<string>();
   const [cookiePop, setCookiePop] = useState<boolean>(false);
-  const { loader } = Dynamic();
+  const [sendAvis, setSendAvis] = useState<boolean>(false);
+  const { loader, sendLoaderMail } = Dynamic();
   const checkIfAccept = () => {
     const nameEQ = "acceptSkillXp" + "=";
     const ca = document.cookie.split(";");
@@ -34,10 +37,12 @@ function App() {
   }, []);
   return (
     <StyledApp className="App">
-      <Header />
+      <Header setSendAvis={setSendAvis} />
       <Home />
       <ToastContainer position="bottom-center" />
+      {sendAvis && <Avis setSendAvis={setSendAvis} />}
       {loader && <Loading />}
+      {sendLoaderMail && <SendLoaderMail />}
       {popFooter && (
         <PopFooter popFooter={popFooter} setPopFooter={setPopFooter} />
       )}

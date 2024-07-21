@@ -12,6 +12,7 @@ export const ContextDynamicProvider = ({
 }: TypeContextDynamicProviderProps) => {
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState<boolean>(false);
+  const [sendLoaderMail, setSendLoaderMail] = useState<boolean>(false);
   const [responseTargetJob, setResponseTargetJob] = useState<
     StateResponseTargetJob[]
   >([]);
@@ -23,6 +24,8 @@ export const ContextDynamicProvider = ({
         user,
         loader,
         setLoader,
+        sendLoaderMail,
+        setSendLoaderMail,
         responseTargetJob,
         setResponseTargetJob,
       }}

@@ -74,3 +74,7 @@ export type PropsPopFooter = {
   popFooter: string;
   setPopFooter: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
+
+export type PropsAvis = {
+  setSendAvis: React.Dispatch<React.SetStateAction<boolean>>;
+};
