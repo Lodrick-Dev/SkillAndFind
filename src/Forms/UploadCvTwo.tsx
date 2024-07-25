@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaDownload } from "react-icons/fa6";
 import styled from "styled-components";
 import Button from "../Button/Button";
@@ -14,6 +14,7 @@ const UploadCvTwo = () => {
   const [nameFile, setNameFile] = useState<string>("");
   const [readyAnalyse, setReadyAnalyse] = useState<boolean>(false);
   const [link, setLink] = useState<string>("");
+  const [countIa, setCountIa] = useState<number>(0);
   const { setLoader, setResponseTargetJob } = Dynamic();
   const handleUploadCv = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
@@ -86,9 +87,38 @@ const UploadCvTwo = () => {
       return;
     }
   };
+  const getCountCheckCv = async () => {
+    try {
+      const res = await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API}count/checkcv`,
+        withCredentials: true,
+      });
+      // console.log(res);
+      if (res.data.succes) {
+        setCountIa(0);
+      }
+      if (res.data[0]) {
+        if (res.data[0].numbRequet) {
+          setCountIa(res.data[0].numbRequet);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setCountIa(0);
+      return toast.error("Une erreur mineure s'est produite");
+    }
+  };
+
+  useEffect(() => {
+    getCountCheckCv();
+  }, []);
   return (
     <StyledUploadCvTwo>
       <h2>Vérifiez si votre cv est correcte pour le poste visé</h2>
+      <span className="count">
+        {countIa} demande{countIa > 1 ? "s" : ""} depuis le 26/07/2024
+      </span>
       <span className="spann">Format PDF uniquement - 1 Mo max</span>
       {/* <span>Limite : 2 vérifications</span> */}
       <div className="div-cv-uploadtwo">
@@ -127,6 +157,10 @@ const StyledUploadCvTwo = styled.form`
   padding-bottom: 20px;
   h2 {
     color: ${COLORS.light};
+  }
+  .count {
+    display: block;
+    margin-top: 15px;
   }
   span {
     font-size: 0.7em;

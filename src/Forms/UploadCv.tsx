@@ -13,6 +13,7 @@ const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
   const [cvUpload, setCvUpload] = useState<File | null>(null);
   const [nameFile, setNameFile] = useState<string>("");
   const [readyAnalyse, setReadyAnalyse] = useState<boolean>(false);
+  const [countIa, setCountIa] = useState<number>(0);
   const { setLoader } = Dynamic();
   const handleIconClick = () => {
     cvInput.current?.click();
@@ -80,9 +81,37 @@ const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
       return;
     }
   };
+  const getCountSuggestionJobs = async () => {
+    try {
+      const res = await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API}count/suggestions`,
+        withCredentials: true,
+      });
+      // console.log(res);
+      if (res.data.succes) {
+        setCountIa(0);
+      }
+      if (res.data[0]) {
+        if (res.data[0].numbRequet) {
+          setCountIa(res.data[0].numbRequet);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setCountIa(0);
+      return toast.error("Une erreur mineure s'est produite");
+    }
+  };
+  useEffect(() => {
+    getCountSuggestionJobs();
+  }, []);
   return (
     <StyledUploadCv>
       <h2>Découvrez les métiers qui vous correspondent + recherche d'offres</h2>
+      <span className="count">
+        {countIa} demande{countIa > 1 ? "s" : ""} depuis le 26/07/2024
+      </span>
       <span className="spann">
         Charger votre Cv | Format PDF uniquement - 1 Mo max
       </span>
@@ -106,6 +135,10 @@ const StyledUploadCv = styled.form`
   margin-top: 25px;
   padding-bottom: 20px;
   border-bottom: solid 2px ${COLORS.second};
+  .count {
+    display: block;
+    margin-top: 15px;
+  }
   h2 {
     color: ${COLORS.light};
   }
