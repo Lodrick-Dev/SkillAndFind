@@ -17,6 +17,10 @@ export type TypeContextDynamic = {
   setResponseTargetJob: React.Dispatch<
     React.SetStateAction<StateResponseTargetJob[]>
   >;
+  cvRedactionLm: File | null;
+  setCvRedactionLm: React.Dispatch<React.SetStateAction<File | null>>;
+  postCible: string;
+  setPostCible: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type TypeContextDynamicProviderProps = {

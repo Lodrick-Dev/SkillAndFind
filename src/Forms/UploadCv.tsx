@@ -14,6 +14,7 @@ const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
   const [nameFile, setNameFile] = useState<string>("");
   const [readyAnalyse, setReadyAnalyse] = useState<boolean>(false);
   const [countIa, setCountIa] = useState<number>(0);
+  const [cvUrlPreview, setCvUrlPreview] = useState<string | null>(null);
   const { setLoader } = Dynamic();
   const handleIconClick = () => {
     cvInput.current?.click();
@@ -30,6 +31,7 @@ const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
           return toast.error("Fichier trop grand, 1 Mo max.");
         }
         setCvUpload(fileCatch);
+        setCvUrlPreview(URL.createObjectURL(fileCatch));
         setReadyAnalyse(true);
         setNameFile(fileCatch.name);
         // console.log(fileCatch);
@@ -121,11 +123,16 @@ const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
         <input type="file" ref={cvInput} onChange={handleUploadCv} />
       </div>
       {readyAnalyse && (
-        <div>
+        <div className="div-to-action">
           <p className="name-file">{nameFile}</p>
           <Button text="Lancez l'analyse" actionClick={handleSub} />
         </div>
       )}
+      <span className="info-bottom">
+        {process.env.REACT_APP_NAME} vous suggère des métiers que vous pouvez
+        exercer en se basant sur vos compétences et votre parcours
+      </span>
+      <span className="info-import">*Vos fichiers ne sont pas sauvegardés</span>
     </StyledUploadCv>
   );
 };
@@ -135,9 +142,14 @@ const StyledUploadCv = styled.form`
   margin-top: 25px;
   padding-bottom: 20px;
   border-bottom: solid 2px ${COLORS.second};
+  display: flex;
+  flex-direction: column;
   .count {
     display: block;
     margin-top: 15px;
+  }
+  .div-to-action {
+    margin-bottom: 15px;
   }
   h2 {
     color: ${COLORS.light};
@@ -164,6 +176,13 @@ const StyledUploadCv = styled.form`
   }
   .div-cv-upload > input {
     display: none;
+  }
+  .info-bottom {
+    padding: 5px;
+    font-size: 0.7em;
+  }
+  .search-span {
+    font-size: 1em;
   }
   //width =< 425px
   @media screen and (max-width: 428px) {

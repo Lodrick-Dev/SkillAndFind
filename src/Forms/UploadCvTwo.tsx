@@ -6,7 +6,6 @@ import axios, { AxiosRequestConfig } from "axios";
 import { Dynamic } from "../Context/ContextDynamic";
 import { toast } from "react-toastify";
 import { COLORS } from "../styles/styles";
-
 const UploadCvTwo = () => {
   const [cvUpload, setCvUpload] = useState<File | null>(null);
   const [targetPost, setTargetPost] = useState<string>("");
@@ -15,7 +14,11 @@ const UploadCvTwo = () => {
   const [readyAnalyse, setReadyAnalyse] = useState<boolean>(false);
   const [link, setLink] = useState<string>("");
   const [countIa, setCountIa] = useState<number>(0);
-  const { setLoader, setResponseTargetJob } = Dynamic();
+  const [countIaLetterMotivation, setCountIaLetterMotivation] =
+    useState<number>(0);
+  const [cvUrlPreview, setCvUrlPreview] = useState<string | null>(null);
+  const { setLoader, setResponseTargetJob, setCvRedactionLm, setPostCible } =
+    Dynamic();
   const handleUploadCv = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const fileCatch = await e.target.files?.[0];
@@ -28,6 +31,8 @@ const UploadCvTwo = () => {
           return toast.error("Fichier trop grand, 1 Mo max.");
         }
         setCvUpload(fileCatch);
+        setCvRedactionLm(fileCatch);
+        setCvUrlPreview(URL.createObjectURL(fileCatch));
         // console.log(fileCatch);
         setReadyAnalyse(true);
         setNameFile(fileCatch.name);
@@ -67,10 +72,11 @@ const UploadCvTwo = () => {
       };
 
       const reponse = await axios(options);
-      console.log(reponse);
+      // console.log(reponse);
       if (reponse.data) {
         if (reponse.data.postTarget) {
           setResponseTargetJob([reponse.data.postTarget]);
+          setPostCible(targetPost);
           setLoader(false);
         } else if (reponse.data.message) {
           setLoader(false);
@@ -109,22 +115,52 @@ const UploadCvTwo = () => {
       return toast.error("Une erreur mineure s'est produite");
     }
   };
+  const getCountLetterMotivation = async () => {
+    try {
+      const res = await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API}count/letter/motivation`,
+        withCredentials: true,
+      });
+      // console.log(res);
+      if (res.data.succes) {
+        setCountIaLetterMotivation(0);
+      }
+      if (res.data[0]) {
+        if (res.data[0].numbRequet) {
+          setCountIaLetterMotivation(res.data[0].numbRequet);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setCountIaLetterMotivation(0);
+      return toast.error("Une erreur mineure s'est produite");
+    }
+  };
 
   useEffect(() => {
     getCountCheckCv();
+    getCountLetterMotivation();
   }, []);
   return (
     <StyledUploadCvTwo>
-      <h2>Vérifiez si votre cv est correcte pour le poste visé</h2>
+      <h2>
+        Vérifiez si votre cv est correcte pour le poste visé + rédaction de
+        lettre de motivation
+      </h2>
       <span className="count">
-        {countIa} demande{countIa > 1 ? "s" : ""} depuis le 26/07/2024
+        {countIa} vérification{countIa > 1 ? "s" : ""} depuis le 26/07/2024
+      </span>
+      <span className="countTwo">
+        {countIaLetterMotivation} LM{countIaLetterMotivation > 1 ? "s" : ""}{" "}
+        depuis le 27/07/2024
       </span>
       <span className="spann">Format PDF uniquement - 1 Mo max</span>
       {/* <span>Limite : 2 vérifications</span> */}
       <div className="div-cv-uploadtwo">
         <input
           type="text"
-          placeholder="Poste visé"
+          placeholder="Poste visé*"
           onChange={(e) => setTargetPost(e.target.value)}
         />
         <FaDownload onClick={handleIconClick} className="icon-download" />
@@ -133,14 +169,20 @@ const UploadCvTwo = () => {
       {readyAnalyse && (
         <div className="last-div">
           <p className="name-file">{nameFile}</p>
-          <Button text="Lancez la vérification" actionClick={handleSub} />
           {targetPost && (
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              Voir la fiche rome de {targetPost} 👀
-            </a>
+            <>
+              <Button text="Lancez la vérification" actionClick={handleSub} />
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                Voir la fiche rome de {targetPost} 👀
+              </a>
+            </>
           )}
         </div>
       )}
+      <span className="info-demark">
+        Démarquez-vous avec une lettre de motivation
+      </span>
+      <span className="info-import">*Vos fichiers ne sont pas sauvegardés</span>
     </StyledUploadCvTwo>
   );
 };
@@ -161,6 +203,10 @@ const StyledUploadCvTwo = styled.form`
   .count {
     display: block;
     margin-top: 15px;
+  }
+  .countTwo {
+    display: block;
+    margin-top: 5px;
   }
   span {
     font-size: 0.7em;
@@ -206,6 +252,9 @@ const StyledUploadCvTwo = styled.form`
     font-size: 0.8em;
     margin-top: 5px;
     color: ${COLORS.second};
+  }
+  .info-demark {
+    margin-top: 15px;
   }
   //width =< 425px
   @media screen and (max-width: 428px) {

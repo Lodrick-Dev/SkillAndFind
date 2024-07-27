@@ -20,7 +20,7 @@ const StyledLoading = styled.div`
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   position: absolute;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   top: 50%;
   right: 50%;

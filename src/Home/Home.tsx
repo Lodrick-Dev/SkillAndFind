@@ -44,10 +44,12 @@ const Home = () => {
   };
   return (
     <StyledHome>
-      <h1>
+      <h1>Révélez Votre Potentiel Professionnel</h1>
+      {/* <h2>Explorez {process.env.REACT_APP:_NAME}</h2> */}
+      {/* <h1>
         Explorez <span>{process.env.REACT_APP_NAME}</span> pour découvrir des
         suggestions de métiers adaptés à votre profil et bien plus encore
-      </h1>
+      </h1> */}
       <FaRobot
         className="icon-bot"
         onClick={() => {
@@ -66,7 +68,7 @@ const Home = () => {
       {responseTargetJob && responseTargetJob.length > 0 && (
         <ReponseJobTarget />
       )}
-      {!displayResult && (
+      {/* {!displayResult && (
         <>
           <span className="info-bottom">
             {process.env.REACT_APP_NAME} vous suggère des métiers que vous
@@ -78,7 +80,7 @@ const Home = () => {
           </span>
         </>
       )}
-      <span className="info-import">*Vos fichiers ne sont pas sauvegardés</span>
+      <span className="info-import">*Vos fichiers ne sont pas sauvegardés</span> */}
       {displayResult && (
         <Button
           text="Téléchargez les suggestions"
@@ -117,17 +119,6 @@ const StyledHome = styled.div`
     color: ${COLORS.second};
     margin: 5px 0px;
     font-size: 0.8em;
-  }
-  .info-bottom {
-    padding: 10px;
-    /* border-top: solid 2px ${COLORS.second}; */
-    margin-top: 10px;
-  }
-  .search-span {
-    font-size: 1em;
-  }
-  .info-import {
-    /* margin-top: 5px; */
   }
   //width =< 42px
   @media screen and (max-width: 428px) {

@@ -16,6 +16,8 @@ export const ContextDynamicProvider = ({
   const [responseTargetJob, setResponseTargetJob] = useState<
     StateResponseTargetJob[]
   >([]);
+  const [cvRedactionLm, setCvRedactionLm] = useState<File | null>(null);
+  const [postCible, setPostCible] = useState<string>("");
 
   return (
     <ContextDynamic.Provider
@@ -28,6 +30,10 @@ export const ContextDynamicProvider = ({
         setSendLoaderMail,
         responseTargetJob,
         setResponseTargetJob,
+        cvRedactionLm,
+        setCvRedactionLm,
+        postCible,
+        setPostCible,
       }}
     >
       {children}
