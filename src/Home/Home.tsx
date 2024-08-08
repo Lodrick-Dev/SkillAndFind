@@ -173,6 +173,7 @@ const StyledHome = styled.div`
         padding: 5px;
         width: 85%;
         strong {
+          color: ${COLORS.dark};
           font-size: 1.3em;
         }
         span {
@@ -181,6 +182,7 @@ const StyledHome = styled.div`
       }
       .icon {
         /* background: greenyellow; */
+        color: ${COLORS.dark};
         width: 15%;
         font-size: 2em;
       }
