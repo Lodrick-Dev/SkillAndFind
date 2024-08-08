@@ -1,21 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { FaDownload } from "react-icons/fa6";
+import { FaDownload, FaRobot } from "react-icons/fa6";
 import { PropsUploadCv, StateJobsAi } from "../Types/Types";
 import Button from "../Button/Button";
 import { COLORS } from "../styles/styles";
 import { toast } from "react-toastify";
 import axios, { AxiosRequestConfig } from "axios";
 import { Dynamic } from "../Context/ContextDynamic";
+import ResultCv from "../IA/ResultCv";
+import { useNavigate } from "react-router-dom";
 
-const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
+// const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
+const UploadCv = () => {
   const cvInput = useRef<HTMLInputElement>(null);
   const [cvUpload, setCvUpload] = useState<File | null>(null);
   const [nameFile, setNameFile] = useState<string>("");
   const [readyAnalyse, setReadyAnalyse] = useState<boolean>(false);
   const [countIa, setCountIa] = useState<number>(0);
   const [cvUrlPreview, setCvUrlPreview] = useState<string | null>(null);
-  const { setLoader } = Dynamic();
+  const { setLoader, setJobs, displayResult, setDisplayresult } = Dynamic();
+  const nav = useNavigate();
   const handleIconClick = () => {
     cvInput.current?.click();
   };
@@ -110,49 +114,74 @@ const UploadCv = ({ setJobs, setDisplayresult }: PropsUploadCv) => {
   }, []);
   return (
     <StyledUploadCv>
-      <h2>Découvrez les métiers qui vous correspondent + recherche d'offres</h2>
+      <h2>
+        Découvrez les métiers qui vous correspondent + recherche offres d'emploi
+      </h2>
       <span className="count">
         {countIa} demande{countIa > 1 ? "s" : ""} depuis le 26/07/2024
       </span>
-      <span className="spann">
-        Charger votre Cv | Format PDF uniquement - 1 Mo max
-      </span>
-      {/* <span>Limite : 2 analyses</span> */}
-      <div className="div-cv-upload">
-        <FaDownload onClick={handleIconClick} className="icon-download" />
-        <input type="file" ref={cvInput} onChange={handleUploadCv} />
-      </div>
-      {readyAnalyse && (
-        <div className="div-to-action">
-          <p className="name-file">{nameFile}</p>
-          <Button text="Lancez l'analyse" actionClick={handleSub} />
+      <FaRobot className="icon-bot" onClick={() => nav("/")} />
+      {displayResult ? (
+        <ResultCv />
+      ) : (
+        <div className="box-to-upload-cv">
+          <span className="spann">
+            Charger votre Cv | Format PDF uniquement - 1 Mo max
+          </span>
+          {/* <span>Limite : 2 analyses</span> */}
+          <div className="div-cv-upload">
+            <FaDownload onClick={handleIconClick} className="icon-download" />
+            <input type="file" ref={cvInput} onChange={handleUploadCv} />
+          </div>
+          {readyAnalyse && (
+            <div className="div-to-action">
+              <p className="name-file">{nameFile}</p>
+              <Button text="Lancez l'analyse" actionClick={handleSub} />
+            </div>
+          )}
+          <span className="info-bottom">
+            {process.env.REACT_APP_NAME} vous suggère des métiers que vous
+            pouvez exercer en se basant sur vos compétences et votre parcours
+          </span>
+          <span className="info-import">
+            *Vos fichiers ne sont pas sauvegardés
+          </span>
         </div>
       )}
-      <span className="info-bottom">
-        {process.env.REACT_APP_NAME} vous suggère des métiers que vous pouvez
-        exercer en se basant sur vos compétences et votre parcours
-      </span>
-      <span className="info-import">*Vos fichiers ne sont pas sauvegardés</span>
     </StyledUploadCv>
   );
 };
 
 export default UploadCv;
-const StyledUploadCv = styled.form`
+const StyledUploadCv = styled.div`
   margin-top: 25px;
   padding-bottom: 20px;
   border-bottom: solid 2px ${COLORS.second};
   display: flex;
   flex-direction: column;
+  align-items: center;
+  height: 100vh;
   .count {
     display: block;
     margin-top: 15px;
+    color: ${COLORS.yellow};
   }
-  .div-to-action {
+  .box-to-upload-cv {
+    display: flex;
+    flex-direction: column;
+  }
+  .icon-bot {
+    text-align: center;
+    font-size: 2.1em;
+    color: ${COLORS.blue};
+    cursor: pointer;
+  }
+  .box-to-upload-cv > .div-to-action {
     margin-bottom: 15px;
   }
   h2 {
     color: ${COLORS.light};
+    /* color: #fff61d; */
   }
   .spann {
     display: block;
@@ -179,9 +208,11 @@ const StyledUploadCv = styled.form`
   }
   .info-bottom {
     padding: 5px;
+    color: ${COLORS.light};
     font-size: 0.7em;
   }
-  .search-span {
+  .info-import {
+    color: ${COLORS.light};
     font-size: 1em;
   }
   //width =< 425px

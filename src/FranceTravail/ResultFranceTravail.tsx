@@ -120,6 +120,10 @@ const StyledResultFranceTravail = styled.div`
       justify-content: flex-start;
       align-items: flex-start;
       position: relative;
+      .li-description {
+        margin: 10px 0px;
+        color: ${COLORS.second};
+      }
       .go-see-link {
         position: absolute;
         bottom: 5px;

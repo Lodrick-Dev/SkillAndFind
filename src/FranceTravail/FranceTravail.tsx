@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { PropsFranceTravail, StateLocalisations } from "../Types/Types";
 import { COLORS } from "../styles/styles";
 import { IoCloseSharp } from "react-icons/io5";
+import debounce from "lodash.debounce";
 
 const FranceTravail = ({ job, setJob, setMatchJobs }: PropsFranceTravail) => {
   const [localisations, setLocalisations] = useState<StateLocalisations[]>([]);
@@ -72,28 +73,51 @@ const FranceTravail = ({ job, setJob, setMatchJobs }: PropsFranceTravail) => {
     }
   };
 
-  const selectCity = async (e: string) => {
-    // const city = "Reims";
-    // console.log(e);
+  const selectCity = (e: string) => {
     setCity(e);
-
-    try {
-      const res = await axios({
-        method: "get",
-        url: `https://geo.api.gouv.fr/communes?nom=${city}&fields=departement&boost=population&limit=5`,
-      });
-      // console.log(res);
-      if (res.data) {
-        if (res.data.length > 0) {
-          setLocalisations(res.data);
+    const cityPlayAfterSecond = async () => {
+      try {
+        const res = await axios({
+          method: "get",
+          url: `https://geo.api.gouv.fr/communes?nom=${city}&fields=departement&boost=population&limit=5`,
+        });
+        // console.log(res);
+        if (res.data) {
+          if (res.data.length > 0) {
+            setLocalisations(res.data);
+          }
         }
+      } catch (error: any) {
+        console.log(error);
+        return toast.error("Une erreur est survenue");
       }
-    } catch (error: any) {
-      console.log(error);
-      return toast.error("Une erreur est survenue");
-    }
+    };
+    setTimeout(() => {
+      cityPlayAfterSecond();
+    }, 300);
   };
 
+  //
+  const debouncedSelectCity = useCallback(
+    debounce((e) => {
+      setCity(e);
+      axios({
+        method: "get",
+        url: `https://geo.api.gouv.fr/communes?nom=${e}&fields=departement&boost=population&limit=5`,
+      })
+        .then((res) => {
+          if (res.data && res.data.length > 0) {
+            setLocalisations(res.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Une erreur est survenue");
+        });
+    }, 300),
+    []
+  );
+  //
   const selectCityInList = (
     ville: string,
     code: string,
@@ -103,6 +127,9 @@ const FranceTravail = ({ job, setJob, setMatchJobs }: PropsFranceTravail) => {
     setCommune(code);
     setDepartement(departement);
     setLocalisations([]);
+    console.log(ville);
+    console.log(code);
+    console.log(departement);
   };
   const cancelAll = () => {
     setLocalisations([]);
@@ -131,6 +158,13 @@ const FranceTravail = ({ job, setJob, setMatchJobs }: PropsFranceTravail) => {
     };
     playNon();
   }, [job, commune]);
+  // useEffect(() => {
+  //   if (job && commune) {
+  //     matchJobs();
+  //   } else if (job && !commune) {
+  //     toast.info("Aucune ville n'est selectionnée");
+  //   }
+  // }, [job, commune]);
 
   useEffect(() => {
     if (city === "") {
@@ -149,8 +183,10 @@ const FranceTravail = ({ job, setJob, setMatchJobs }: PropsFranceTravail) => {
             type="text"
             placeholder="Ville"
             value={city ? city : ""}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              selectCity(e.target.value)
+            onChange={
+              (e: React.ChangeEvent<HTMLInputElement>) =>
+                selectCity(e.target.value)
+              // debouncedSelectCity(e.target.value)
             }
           />
           {localisations && localisations.length > 0 && (
@@ -259,7 +295,7 @@ const StyledFranceTravail = styled.div`
     }
   }
   //width =< 42px
-  @media screen and (max-width: 428px) {
+  @media screen and (max-width: 429px) {
     /* background: pink; */
     width: 100%;
     .search-and-list {

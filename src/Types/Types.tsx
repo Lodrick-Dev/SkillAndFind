@@ -3,6 +3,9 @@ export type StateJobsAi = {
   requis?: string;
   conseil?: string;
 };
+export type StateSkills = {
+  skill?: string;
+};
 export type StateJob = {
   job: StateJobsAi;
   setJob: React.Dispatch<React.SetStateAction<string | undefined>>;

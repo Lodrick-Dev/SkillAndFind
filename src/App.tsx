@@ -13,13 +13,18 @@ import PopUp from "./PopUp/PopUp";
 import { Dynamic } from "./Context/ContextDynamic";
 import Avis from "./Forms/Avis";
 import SendLoaderMail from "./Loading/SendLoaderMail";
+import { Route, Routes } from "react-router-dom";
+import UploadCv from "./Forms/UploadCv";
+import UploadCvTwo from "./Forms/UploadCvTwo";
+import TheSkills from "./PagesSuplementaires/TheSkills";
+import SearchLoading from "./Loading/SearchLoading";
 
 function App() {
   // const [loader, setLoader] = useState<boolean>(false);
   const [popFooter, setPopFooter] = useState<string>();
   const [cookiePop, setCookiePop] = useState<boolean>(false);
   const [sendAvis, setSendAvis] = useState<boolean>(false);
-  const { loader, sendLoaderMail } = Dynamic();
+  const { loader, sendLoaderMail, loadingSearch } = Dynamic();
   const checkIfAccept = () => {
     const nameEQ = "acceptSkillXp" + "=";
     const ca = document.cookie.split(";");
@@ -38,7 +43,14 @@ function App() {
   return (
     <StyledApp className="App">
       <Header setSendAvis={setSendAvis} />
-      <Home />
+      <Routes>
+        {/* <Home /> */}
+        <Route path="/jobs" element={<UploadCv />}></Route>
+        <Route path="/cv" element={<UploadCvTwo />}></Route>
+        <Route path="/skills" element={<TheSkills />}></Route>
+        <Route path="/reconversion" element={<Home />}></Route>
+        <Route path="*" element={<Home />}></Route>
+      </Routes>
       <ToastContainer position="bottom-center" />
       {sendAvis && <Avis setSendAvis={setSendAvis} />}
       {loader && <Loading />}
@@ -47,6 +59,7 @@ function App() {
         <PopFooter popFooter={popFooter} setPopFooter={setPopFooter} />
       )}
       {cookiePop && <PopUp />}
+      {loadingSearch && <SearchLoading />}
       <Footer setPopFooter={setPopFooter} />
     </StyledApp>
   );

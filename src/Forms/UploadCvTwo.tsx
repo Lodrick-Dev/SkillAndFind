@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaDownload } from "react-icons/fa6";
+import { FaDownload, FaRobot } from "react-icons/fa6";
 import styled from "styled-components";
 import Button from "../Button/Button";
 import axios, { AxiosRequestConfig } from "axios";
 import { Dynamic } from "../Context/ContextDynamic";
 import { toast } from "react-toastify";
 import { COLORS } from "../styles/styles";
+import { useNavigate } from "react-router-dom";
+import ReponseJobTarget from "../IA/ReponseJobTarget";
+import { TiArrowBack } from "react-icons/ti";
 const UploadCvTwo = () => {
   const [cvUpload, setCvUpload] = useState<File | null>(null);
   const [targetPost, setTargetPost] = useState<string>("");
@@ -17,8 +20,14 @@ const UploadCvTwo = () => {
   const [countIaLetterMotivation, setCountIaLetterMotivation] =
     useState<number>(0);
   const [cvUrlPreview, setCvUrlPreview] = useState<string | null>(null);
-  const { setLoader, setResponseTargetJob, setCvRedactionLm, setPostCible } =
-    Dynamic();
+  const {
+    setLoader,
+    responseTargetJob,
+    setResponseTargetJob,
+    setCvRedactionLm,
+    setPostCible,
+  } = Dynamic();
+  const nav = useNavigate();
   const handleUploadCv = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const fileCatch = await e.target.files?.[0];
@@ -145,8 +154,8 @@ const UploadCvTwo = () => {
   return (
     <StyledUploadCvTwo>
       <h2>
-        Vérifiez si votre cv est correcte pour le poste visé + rédaction de
-        lettre de motivation
+        Vérifiez si votre cv est correcte pour le poste visé + exemple de lettre
+        de motivation
       </h2>
       <span className="count">
         {countIa} vérification{countIa > 1 ? "s" : ""} depuis le 26/07/2024
@@ -156,8 +165,20 @@ const UploadCvTwo = () => {
         depuis le 27/07/2024
       </span>
       <span className="spann">Format PDF uniquement - 1 Mo max</span>
+      <div className="box-icon-robot-and-arrow-to-back">
+        <FaRobot className="icon-bot" onClick={() => nav("/")} />
+        {readyAnalyse && responseTargetJob && responseTargetJob.length > 0 && (
+          <TiArrowBack
+            className="icon-back"
+            onClick={() => {
+              setReadyAnalyse(false);
+              setResponseTargetJob([]);
+            }}
+          />
+        )}
+      </div>
       {/* <span>Limite : 2 vérifications</span> */}
-      <div className="div-cv-uploadtwo">
+      {/* <div className="div-cv-uploadtwo">
         <input
           type="text"
           placeholder="Poste visé*"
@@ -178,6 +199,37 @@ const UploadCvTwo = () => {
             </>
           )}
         </div>
+      )} */}
+      {responseTargetJob && responseTargetJob.length > 0 ? (
+        <ReponseJobTarget />
+      ) : (
+        <>
+          <div className="div-cv-uploadtwo">
+            <input
+              type="text"
+              placeholder="Poste visé*"
+              onChange={(e) => setTargetPost(e.target.value)}
+            />
+            <FaDownload onClick={handleIconClick} className="icon-download" />
+            <input type="file" ref={cvInput} onChange={handleUploadCv} />
+          </div>
+          {readyAnalyse && (
+            <div className="last-div">
+              <p className="name-file">{nameFile}</p>
+              {targetPost && (
+                <>
+                  <Button
+                    text="Lancez la vérification"
+                    actionClick={handleSub}
+                  />
+                  <a href={link} target="_blank" rel="noopener noreferrer">
+                    Voir la fiche rome de {targetPost} 👀
+                  </a>
+                </>
+              )}
+            </div>
+          )}
+        </>
       )}
       <span className="info-demark">
         Démarquez-vous avec une lettre de motivation
@@ -188,31 +240,52 @@ const UploadCvTwo = () => {
 };
 
 export default UploadCvTwo;
-const StyledUploadCvTwo = styled.form`
+const StyledUploadCvTwo = styled.div`
   /* background: red; */
   margin-top: 45px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   /* border-bottom: solid 2px ${COLORS.second}; */
   /* border: solid 2px ${COLORS.second}; */
   padding-bottom: 20px;
+  height: 100vh;
+  overflow: hidden;
   h2 {
     color: ${COLORS.light};
   }
   .count {
     display: block;
     margin-top: 15px;
+    color: ${COLORS.purple};
   }
   .countTwo {
     display: block;
     margin-top: 5px;
+    color: ${COLORS.purple};
+  }
+  .spann {
+    margin: 10px;
   }
   span {
     font-size: 0.7em;
+    color: ${COLORS.light};
+  }
+  .icon-bot {
+    text-align: center;
+    font-size: 2.1em;
+    color: ${COLORS.blue};
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .icon-back {
+    font-size: 2.1em;
+    color: ${COLORS.purple};
   }
   > .div-cv-uploadtwo {
     /* background: pink; */
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -257,9 +330,15 @@ const StyledUploadCvTwo = styled.form`
     margin-top: 15px;
   }
   //width =< 425px
-  @media screen and (max-width: 428px) {
+  @media screen and (max-width: 429px) {
     h2 {
       font-size: 1.3em;
+    }
+    > .div-cv-uploadtwo {
+      width: 70%;
+    }
+    > .div-cv-uploadtwo > input {
+      width: 90%;
     }
   }
 `;

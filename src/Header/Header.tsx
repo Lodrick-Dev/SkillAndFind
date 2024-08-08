@@ -1,14 +1,18 @@
 import React from "react";
-import { FaWpexplorer } from "react-icons/fa";
 import styled from "styled-components";
 import { COLORS } from "../styles/styles";
 import { PropsAvis } from "../Types/Types";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ setSendAvis }: PropsAvis) => {
+  const nav = useNavigate();
   return (
     <StyledHeader>
-      {/* <FaWpexplorer className="icon-header-logo" /> */}
-      <img src="./assets/skillXp.png" alt="logo skillxp" />
+      <img
+        src="./assets/skillXp.png"
+        alt="logo skillxp"
+        onClick={() => nav("/")}
+      />
       <h1>{process.env.REACT_APP_NAME} - IA</h1>
       <button onClick={() => setSendAvis(true)}>Un avis ?</button>
     </StyledHeader>
@@ -24,6 +28,7 @@ const StyledHeader = styled.header`
   padding-top: 10px;
   img {
     display: block;
+    cursor: pointer;
     width: 4%;
   }
   .icon-header-logo {

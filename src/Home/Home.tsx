@@ -1,92 +1,99 @@
 import styled from "styled-components";
-import UploadCv from "../Forms/UploadCv";
-import { useState } from "react";
-import { StateJobsAi } from "../Types/Types";
 import { FaRobot } from "react-icons/fa6";
 import { COLORS } from "../styles/styles";
-import ResultCv from "../IA/ResultCv";
-import Button from "../Button/Button";
 import { toast } from "react-toastify";
+import { FaThList } from "react-icons/fa";
+import { MdDocumentScanner } from "react-icons/md";
+import { FaListCheck } from "react-icons/fa6";
+import { MdOutlinePublishedWithChanges } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import ListeAvis from "../ListsAvis/ListeAvis";
 import axios from "axios";
-import { Dynamic } from "../Context/ContextDynamic";
-import UploadCvTwo from "../Forms/UploadCvTwo";
-import ReponseJobTarget from "../IA/ReponseJobTarget";
+import { useEffect, useState } from "react";
 
 const Home = () => {
-  const [jobs, setJobs] = useState<StateJobsAi[]>([]);
-  const [displayResult, setDisplayresult] = useState<boolean>(false);
-  const { setLoader, responseTargetJob } = Dynamic();
-  const downloadResult = async () => {
-    setLoader(true);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const nav = useNavigate();
+  const tryReconversion = async () => {
+    toast.info("En cours de développement");
     try {
-      const data = { jobs };
-
       const res = await axios({
         method: "post",
-        url: `${process.env.REACT_APP_API}genere/results`,
+        url: `${process.env.REACT_APP_API}send/mail/reconversion`,
         withCredentials: true,
-        data,
-        responseType: "blob",
       });
-      // console.log(res);
-      const blob = new Blob([res.data], { type: "application/pdf" });
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "result.pdf";
-      link.click();
-      setLoader(false);
     } catch (error) {
       console.log(error);
-      setLoader(false);
-      toast.error("Une erreur est survenue lors du téléchargement");
-      return;
     }
   };
+  const getTotalCountCallia = async () => {
+    try {
+      const res = await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API}count/total`,
+        withCredentials: true,
+      });
+      // console.log(res);
+      if (res.data.total) {
+        setTotalCount(res.data.total);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getTotalCountCallia();
+  }, []);
   return (
     <StyledHome>
       <h1>Révélez Votre Potentiel Professionnel</h1>
-      {/* <h2>Explorez {process.env.REACT_APP:_NAME}</h2> */}
-      {/* <h1>
-        Explorez <span>{process.env.REACT_APP_NAME}</span> pour découvrir des
-        suggestions de métiers adaptés à votre profil et bien plus encore
-      </h1> */}
-      <FaRobot
-        className="icon-bot"
-        onClick={() => {
-          setJobs([]);
-          setDisplayresult(false);
-        }}
-      />
-      {!displayResult ? (
-        <>
-          <UploadCv setJobs={setJobs} setDisplayresult={setDisplayresult} />
-          <UploadCvTwo />
-        </>
-      ) : (
-        <ResultCv jobs={jobs} />
-      )}
-      {responseTargetJob && responseTargetJob.length > 0 && (
-        <ReponseJobTarget />
-      )}
-      {/* {!displayResult && (
-        <>
-          <span className="info-bottom">
-            {process.env.REACT_APP_NAME} vous suggère des métiers que vous
-            pouvez exercer en se basant sur vos compétences et votre parcours
-          </span>
-          <span className="search-span">
-            Faites une recherche sur les métiers en un clic - adapter votre cv
-            pour postuler
-          </span>
-        </>
-      )}
-      <span className="info-import">*Vos fichiers ne sont pas sauvegardés</span> */}
-      {displayResult && (
-        <Button
-          text="Téléchargez les suggestions"
-          actionClick={downloadResult}
-        />
-      )}
+      <h2 className="second-titre-home">
+        ...avec des recommandations personnalisées pour choisir un métier,
+        optimiser votre CV, et réussir votre reconversion professionnelle
+      </h2>
+      <FaRobot className="icon-bot" />
+      <span>
+        {totalCount} demande{totalCount > 1 ? "s" : ""} au total
+      </span>
+      <div className="box-btn-choose">
+        <button className="btn-jobs" onClick={() => nav("/jobs")}>
+          <div>
+            <strong>Les Métiers</strong>{" "}
+            <span>qui vous correspondent + recherche offres d’emploi</span>{" "}
+          </div>
+          <FaThList className="icon" />
+        </button>
+        <button className="btn-cv" onClick={() => nav("/cv")}>
+          <div>
+            <strong>Votre Cv </strong>
+            <span>
+              est correcte pour un poste ? + Exemple de lettre de motivation
+            </span>
+          </div>
+          <MdDocumentScanner className="icon" />
+        </button>
+        <button className="btn-skills" onClick={() => nav("/skills")}>
+          <div>
+            <strong> Les compétences </strong>
+            <span>La liste des compétences pour un métier visé</span>
+          </div>
+          <FaListCheck className="icon" />
+        </button>
+        <button
+          className="btn-reconversion-pro"
+          onClick={() => tryReconversion()}
+        >
+          {" "}
+          <div>
+            <strong>Reconversion Pro</strong>{" "}
+            <span>
+              faites le grand saut, laissez vous guider dès maintenant
+            </span>
+          </div>
+          <MdOutlinePublishedWithChanges className="icon" />
+        </button>
+      </div>
+      {/* <ListeAvis /> */}
     </StyledHome>
   );
 };
@@ -99,6 +106,7 @@ const StyledHome = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 100%;
   /* background: pink; */
   h1 {
     margin: 20px auto;
@@ -110,9 +118,14 @@ const StyledHome = styled.div`
       color: ${COLORS.second};
     }
   }
+  .second-titre-home {
+    width: 60%;
+    color: white;
+    font-size: 1em;
+  }
   .icon-bot {
-    color: ${COLORS.blue};
     font-size: 2.1em;
+    color: ${COLORS.blue};
     cursor: pointer;
   }
   span {
@@ -120,10 +133,79 @@ const StyledHome = styled.div`
     margin: 5px 0px;
     font-size: 0.8em;
   }
+  .box-btn-choose {
+    /* background: pink; */
+    padding: 5px;
+    margin-bottom: 20px;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 2px white;
+    .btn-jobs {
+      background: ${COLORS.yellow};
+    }
+    .btn-cv {
+      background: ${COLORS.purple};
+    }
+    .btn-skills {
+      background: ${COLORS.orange};
+    }
+    .btn-reconversion-pro {
+      background: ${COLORS.green};
+    }
+    button {
+      margin: 20px;
+      display: block;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      width: 30%;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      div {
+        /* background: yellow; */
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        width: 85%;
+        strong {
+          font-size: 1.3em;
+        }
+        span {
+          color: ${COLORS.dark};
+        }
+      }
+      .icon {
+        /* background: greenyellow; */
+        width: 15%;
+        font-size: 2em;
+      }
+    }
+    button:active {
+      transition: 0.5s;
+      transform: scale(1.1);
+    }
+  }
   //width =< 42px
-  @media screen and (max-width: 428px) {
+  @media screen and (max-width: 429px) {
     h1 {
       font-size: 1.4em;
+    }
+    .second-titre-home {
+      width: 80%;
+    }
+    .box-btn-choose {
+      width: 90%;
+      flex-direction: column;
+      padding-bottom: 40px;
+      button {
+        width: 80%;
+        margin: 5px;
+      }
     }
   }
 `;

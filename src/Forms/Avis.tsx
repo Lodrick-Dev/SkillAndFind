@@ -56,7 +56,7 @@ const Avis = ({ setSendAvis }: PropsAvis) => {
   return (
     <StyledAvis onClick={() => setSendAvis(false)}>
       <div className="sous-div-avis" onClick={(e) => e.stopPropagation()}>
-        <h2>Laissez-nous un avis</h2>
+        <h2>Laissez-nous un avis*</h2>
         <textarea
           value={avis ? avis : ""}
           onChange={(e) => setAvis(e.target.value)}
@@ -64,6 +64,7 @@ const Avis = ({ setSendAvis }: PropsAvis) => {
         ></textarea>
         <input type="hidden" onChange={(e) => setSpam(e.target.value)} />
         <Button text="Envoyez" actionClick={sendAvis} />
+        <span>*Les avis peuvent être publié</span>
       </div>
     </StyledAvis>
   );
@@ -105,6 +106,16 @@ const StyledAvis = styled.div`
       border: none;
       border-radius: 5px;
       margin-bottom: 10px;
+    }
+    span {
+      font-size: 0.8em;
+      color: ${COLORS.light};
+    }
+  }
+  //width =< 425px
+  @media screen and (max-width: 429px) {
+    .sous-div-avis {
+      width: 90%;
     }
   }
 `;

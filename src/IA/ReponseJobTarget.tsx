@@ -88,7 +88,8 @@ const StyledReponseTargetJob = styled.div`
   background: ${COLORS.main};
   padding: 10px;
   border-radius: 5px;
-  margin-bottom: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   position: relative;
   width: 70%;
   .info-ia {

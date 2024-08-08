@@ -4,6 +4,7 @@ import {
   TypeContextDynamic,
   TypeContextDynamicProviderProps,
 } from "../Types/TypesContext";
+import { StateJobsAi } from "../Types/Types";
 
 const ContextDynamic = createContext<TypeContextDynamic | undefined>(undefined);
 
@@ -13,11 +14,14 @@ export const ContextDynamicProvider = ({
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState<boolean>(false);
   const [sendLoaderMail, setSendLoaderMail] = useState<boolean>(false);
+  const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
   const [responseTargetJob, setResponseTargetJob] = useState<
     StateResponseTargetJob[]
   >([]);
   const [cvRedactionLm, setCvRedactionLm] = useState<File | null>(null);
   const [postCible, setPostCible] = useState<string>("");
+  const [jobs, setJobs] = useState<StateJobsAi[]>([]);
+  const [displayResult, setDisplayresult] = useState<boolean>(false);
 
   return (
     <ContextDynamic.Provider
@@ -28,12 +32,18 @@ export const ContextDynamicProvider = ({
         setLoader,
         sendLoaderMail,
         setSendLoaderMail,
+        loadingSearch,
+        setLoadingSearch,
         responseTargetJob,
         setResponseTargetJob,
         cvRedactionLm,
         setCvRedactionLm,
         postCible,
         setPostCible,
+        jobs,
+        setJobs,
+        displayResult,
+        setDisplayresult,
       }}
     >
       {children}

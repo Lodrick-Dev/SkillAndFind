@@ -24,8 +24,8 @@ const Footer = ({ setPopFooter }: PropsFooter) => {
 
 export default Footer;
 const StyledFooter = styled.footer`
-  margin-top: 30px;
-  padding: 10px;
+  margin-top: 40px;
+  padding: 20px;
   ul > li {
     cursor: pointer;
     color: ${COLORS.blue};

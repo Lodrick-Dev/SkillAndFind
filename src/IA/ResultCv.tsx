@@ -10,10 +10,16 @@ import { COLORS } from "../styles/styles";
 import FranceTravail from "../FranceTravail/FranceTravail";
 import ResultFranceTravail from "../FranceTravail/ResultFranceTravail";
 import { IoCloseSharp } from "react-icons/io5";
+import { Dynamic } from "../Context/ContextDynamic";
+import Button from "../Button/Button";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { TiArrowBack } from "react-icons/ti";
 
-const ResultCv = ({ jobs }: PropsResultCv) => {
+const ResultCv = () => {
   const [job, setJob] = useState<StateJob | string | undefined>();
   const [matchJobs, setMatchJobs] = useState<StateMatchJobs[]>([]);
+  const { jobs, setLoader, setJobs, setDisplayresult } = Dynamic();
   // let jobsCatch: string[] = [];
   // const catchNameJobs = () => {
   //   jobs &&
@@ -35,6 +41,32 @@ const ResultCv = ({ jobs }: PropsResultCv) => {
   const emptyDataToNotSearchIfDontClick = () => {
     setMatchJobs([]);
     setJob("");
+  };
+  const downloadResult = async () => {
+    setLoader(true);
+    try {
+      const data = { jobs };
+
+      const res = await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_API}genere/results`,
+        withCredentials: true,
+        data,
+        responseType: "blob",
+      });
+      // console.log(res);
+      const blob = new Blob([res.data], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "result.pdf";
+      link.click();
+      setLoader(false);
+    } catch (error) {
+      console.log(error);
+      setLoader(false);
+      toast.error("Une erreur est survenue lors du téléchargement");
+      return;
+    }
   };
   return (
     <StyledResultCv>
@@ -66,9 +98,18 @@ const ResultCv = ({ jobs }: PropsResultCv) => {
         )}
         <ul className="ul-list-sug-ia">
           {jobs && jobs.length > 0 && (
-            <strong className="strong-sugg">
-              {jobs.length} suggestion{jobs.length > 1 ? "s" : ""}
-            </strong>
+            <div className="lil-header">
+              <strong className="strong-sugg">
+                {jobs.length} suggestion{jobs.length > 1 ? "s" : ""}
+              </strong>
+              <TiArrowBack
+                className="icon-back"
+                onClick={() => {
+                  setJobs([]);
+                  setDisplayresult(false);
+                }}
+              />
+            </div>
           )}
           {jobs &&
             jobs.map((j: StateJobsAi, index: number) => (
@@ -88,6 +129,7 @@ const ResultCv = ({ jobs }: PropsResultCv) => {
             ))}
         </ul>
       </div>
+      <Button text="Téléchargez les suggestions" actionClick={downloadResult} />
     </StyledResultCv>
   );
 };
@@ -100,6 +142,7 @@ const StyledResultCv = styled.div`
   justify-content: center;
   align-items: center;
   height: 70vh;
+  margin-top: 10px;
   p {
     color: ${COLORS.second};
   }
@@ -148,8 +191,20 @@ const StyledResultCv = styled.div`
         cursor: pointer;
       }
     }
-    .ul-list-sug-ia > .strong-sugg {
+    .ul-list-sug-ia > .lil-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ul-list-sug-ia > .lil-header > .icon-back {
+      font-size: 2.3em;
+      color: ${COLORS.blue};
+      cursor: pointer;
+    }
+    .ul-list-sug-ia > .lil-header > .strong-sugg {
       color: ${COLORS.second};
+      display: block;
+      margin-right: 15px;
     }
     .ul-list-sug-ia > .box-to-list-jobs-ia {
       cursor: pointer;
@@ -190,7 +245,7 @@ const StyledResultCv = styled.div`
     }
   }
   //width =< 425px
-  @media screen and (max-width: 428px) {
+  @media screen and (max-width: 429px) {
     .div-transf {
       width: 100%;
     }
