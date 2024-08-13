@@ -139,12 +139,12 @@ const UploadCv = () => {
               <Button text="Lancez l'analyse" actionClick={handleSub} />
             </div>
           )}
+          <span className="info-import">
+            *Vos fichiers ne sont pas sauvegardés
+          </span>
           <span className="info-bottom">
             {process.env.REACT_APP_NAME} vous suggère des métiers que vous
             pouvez exercer en se basant sur vos compétences et votre parcours
-          </span>
-          <span className="info-import">
-            *Vos fichiers ne sont pas sauvegardés
           </span>
         </div>
       )}
@@ -209,11 +209,11 @@ const StyledUploadCv = styled.div`
   .info-bottom {
     padding: 5px;
     color: ${COLORS.light};
-    font-size: 0.7em;
+    font-size: 1em;
   }
   .info-import {
     color: ${COLORS.light};
-    font-size: 1em;
+    font-size: 0.8em;
   }
   //width =< 425px
   @media screen and (max-width: 428px) {
