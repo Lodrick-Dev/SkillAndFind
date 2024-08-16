@@ -64,7 +64,7 @@ const Avis = ({ setSendAvis }: PropsAvis) => {
         ></textarea>
         <input type="hidden" onChange={(e) => setSpam(e.target.value)} />
         <Button text="Envoyez" actionClick={sendAvis} />
-        <span>*Les avis peuvent être publié</span>
+        <span>*Les avis peuvent être publiés</span>
       </div>
     </StyledAvis>
   );
