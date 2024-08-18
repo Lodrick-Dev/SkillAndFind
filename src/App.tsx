@@ -18,6 +18,7 @@ import UploadCv from "./Forms/UploadCv";
 import UploadCvTwo from "./Forms/UploadCvTwo";
 import TheSkills from "./PagesSuplementaires/TheSkills";
 import SearchLoading from "./Loading/SearchLoading";
+import Reconversion from "./PagesSuplementaires/Reconversion";
 
 function App() {
   // const [loader, setLoader] = useState<boolean>(false);
@@ -48,7 +49,7 @@ function App() {
         <Route path="/jobs" element={<UploadCv />}></Route>
         <Route path="/cv" element={<UploadCvTwo />}></Route>
         <Route path="/skills" element={<TheSkills />}></Route>
-        <Route path="/reconversion" element={<Home />}></Route>
+        <Route path="/orientation" element={<Reconversion />}></Route>
         <Route path="*" element={<Home />}></Route>
       </Routes>
       <ToastContainer position="bottom-center" />

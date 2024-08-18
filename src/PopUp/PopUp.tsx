@@ -32,7 +32,7 @@ const PopUp = () => {
 
 export default PopUp;
 const StyledPopUp = styled.div`
-  background: ${COLORS.transparent};
+  background: ${COLORS.dark};
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   position: fixed;
@@ -49,7 +49,9 @@ const StyledPopUp = styled.div`
     display: flex;
     flex-direction: column;
     p {
-      color: ${COLORS.light};
+      color: ${COLORS.blue};
+      font-weight: 800;
+      font-size: 1.1em;
     }
     button {
       margin-top: 10px;
@@ -59,11 +61,13 @@ const StyledPopUp = styled.div`
       background: ${COLORS.blue};
       color: ${COLORS.light};
       font-size: 1em;
+      font-weight: 800;
       padding: 3px;
       cursor: pointer;
     }
     .red-btn {
       background: ${COLORS.second} !important;
+      color: ${COLORS.blue};
     }
   }
   //width =< 42px

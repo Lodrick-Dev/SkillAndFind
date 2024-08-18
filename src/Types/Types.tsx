@@ -81,3 +81,22 @@ export type PropsPopFooter = {
 export type PropsAvis = {
   setSendAvis: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+//reconversion
+export type PropsBoxSecond = {
+  ordreQuestion: number;
+  setOrdreQuestion: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export type PropsCompoSoftSkills = {
+  setChoisiSkills: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+export type DataToResume = {
+  job: string;
+  raison: string;
+};
+
+export type PropsResume = {
+  reponse: DataToResume[];
+};

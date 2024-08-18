@@ -49,7 +49,7 @@ const Home = () => {
       <h1>Révélez Votre Potentiel Professionnel</h1>
       <h2 className="second-titre-home">
         ...avec des recommandations personnalisées pour choisir un métier,
-        optimiser votre CV, et réussir votre reconversion professionnelle
+        optimiser votre CV, et réussir votre orientation professionnelle
       </h2>
       <FaRobot className="icon-bot" />
       <span>
@@ -81,11 +81,11 @@ const Home = () => {
         </button>
         <button
           className="btn-reconversion-pro"
-          onClick={() => tryReconversion()}
+          onClick={() => nav("/orientation")}
         >
           {" "}
           <div>
-            <strong>Reconversion Pro</strong>{" "}
+            <strong>Orientation Pro</strong>{" "}
             <span>
               faites le grand saut, laissez vous guider dès maintenant
             </span>

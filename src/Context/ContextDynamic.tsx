@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import {
   StateResponseTargetJob,
+  StateResumeConversion,
   TypeContextDynamic,
   TypeContextDynamicProviderProps,
 } from "../Types/TypesContext";
@@ -22,6 +23,9 @@ export const ContextDynamicProvider = ({
   const [postCible, setPostCible] = useState<string>("");
   const [jobs, setJobs] = useState<StateJobsAi[]>([]);
   const [displayResult, setDisplayresult] = useState<boolean>(false);
+  const [resumeReconversion, setResumeReconversion] = useState<
+    StateResumeConversion[]
+  >([]);
 
   return (
     <ContextDynamic.Provider
@@ -44,6 +48,8 @@ export const ContextDynamicProvider = ({
         setJobs,
         displayResult,
         setDisplayresult,
+        resumeReconversion,
+        setResumeReconversion,
       }}
     >
       {children}

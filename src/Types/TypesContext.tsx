@@ -7,6 +7,19 @@ export type StateResponseTargetJob = {
   conseil: string;
 };
 
+export type StateResumeConversion = {
+  passion?: string;
+  job?: string;
+  skills?: string;
+  why?: string;
+  sector?: string;
+  wish?: string;
+  interetPerso?: string;
+  interetPro?: string;
+  hardSkill?: string;
+  softSkill?: string;
+};
+
 export type TypeContextDynamic = {
   user: string | null;
   setUser: React.Dispatch<React.SetStateAction<null>>;
@@ -28,6 +41,10 @@ export type TypeContextDynamic = {
   setJobs: React.Dispatch<React.SetStateAction<StateJobsAi[]>>;
   displayResult: boolean;
   setDisplayresult: React.Dispatch<React.SetStateAction<boolean>>;
+  resumeReconversion: StateResumeConversion[];
+  setResumeReconversion: React.Dispatch<
+    React.SetStateAction<StateResumeConversion[]>
+  >;
 };
 
 export type TypeContextDynamicProviderProps = {
