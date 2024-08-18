@@ -253,17 +253,17 @@ const StyledUploadCvTwo = styled.div`
   height: 100vh;
   overflow: hidden;
   h2 {
-    color: ${COLORS.light};
+    color: ${COLORS.purple};
   }
   .count {
     display: block;
     margin-top: 15px;
-    color: ${COLORS.purple};
+    color: ${COLORS.second};
   }
   .countTwo {
     display: block;
     margin-top: 5px;
-    color: ${COLORS.purple};
+    color: ${COLORS.second};
   }
   .spann {
     margin: 10px;

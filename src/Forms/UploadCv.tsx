@@ -161,10 +161,13 @@ const StyledUploadCv = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  h2 {
+    color: ${COLORS.yellow};
+  }
   .count {
     display: block;
     margin-top: 15px;
-    color: ${COLORS.yellow};
+    color: ${COLORS.second};
   }
   .box-to-upload-cv {
     display: flex;
@@ -179,10 +182,7 @@ const StyledUploadCv = styled.div`
   .box-to-upload-cv > .div-to-action {
     margin-bottom: 15px;
   }
-  h2 {
-    color: ${COLORS.light};
-    /* color: #fff61d; */
-  }
+
   .spann {
     display: block;
     color: ${COLORS.second};
