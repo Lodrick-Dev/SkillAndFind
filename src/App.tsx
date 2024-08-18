@@ -59,7 +59,7 @@ function App() {
       {popFooter && (
         <PopFooter popFooter={popFooter} setPopFooter={setPopFooter} />
       )}
-      {cookiePop && <PopUp />}
+      {cookiePop && <PopUp setPopFooter={setPopFooter} />}
       {loadingSearch && <SearchLoading />}
       <Footer setPopFooter={setPopFooter} />
     </StyledApp>

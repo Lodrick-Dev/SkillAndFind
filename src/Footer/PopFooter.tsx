@@ -55,4 +55,11 @@ const StyledPopFooter = styled.div`
     border-radius: 5px;
     overflow-y: scroll;
   }
+  //width =< 42px
+  @media screen and (max-width: 429px) {
+    .box-to-one-info {
+      margin-top: 0px;
+      width: 90%;
+    }
+  }
 `;

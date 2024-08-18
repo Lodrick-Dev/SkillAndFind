@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../styles/styles";
+import { PropsFooter } from "../Types/Types";
 
-const PopUp = () => {
+const PopUp = ({ setPopFooter }: PropsFooter) => {
   const accept = () => {
     const date = new Date();
     date.setTime(date.getTime() + 90 * 24 * 60 * 60 * 1000); // Convertir les jours en millisecondes
@@ -18,8 +19,15 @@ const PopUp = () => {
     <StyledPopUp>
       <div>
         <p>
-          En naviguant sur SkillXP, vous acceptez nos conditions d'utilisation
-          et notre politique de confidentialité.
+          En naviguant sur SkillXP, vous acceptez nos{" "}
+          <span onClick={() => setPopFooter("condition")}>
+            {" "}
+            conditions d'utilisation{" "}
+          </span>{" "}
+          et notre{" "}
+          <span onClick={() => setPopFooter("politique")}>
+            politique de confidentialité.
+          </span>
         </p>
         <button onClick={accept}>Oui</button>
         <button className="red-btn" onClickCapture={redirectToGoogle}>
@@ -52,6 +60,10 @@ const StyledPopUp = styled.div`
       color: ${COLORS.blue};
       font-weight: 800;
       font-size: 1.1em;
+      span {
+        color: ${COLORS.second};
+        cursor: pointer;
+      }
     }
     button {
       margin-top: 10px;
