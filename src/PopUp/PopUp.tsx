@@ -40,7 +40,7 @@ const PopUp = ({ setPopFooter }: PropsFooter) => {
 
 export default PopUp;
 const StyledPopUp = styled.div`
-  background: ${COLORS.dark};
+  background: ${COLORS.glob};
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   position: fixed;
@@ -57,7 +57,7 @@ const StyledPopUp = styled.div`
     display: flex;
     flex-direction: column;
     p {
-      color: ${COLORS.blue};
+      color: ${COLORS.light};
       font-weight: 800;
       font-size: 1.1em;
       span {
@@ -79,7 +79,7 @@ const StyledPopUp = styled.div`
     }
     .red-btn {
       background: ${COLORS.second} !important;
-      color: ${COLORS.blue};
+      color: ${COLORS.light};
     }
   }
   //width =< 42px

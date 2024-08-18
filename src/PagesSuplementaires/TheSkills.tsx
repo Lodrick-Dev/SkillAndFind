@@ -81,7 +81,7 @@ const TheSkills = () => {
         <Button text="Lancer la recherche" actionClick={searchSkill} />
         {skills && (
           <ul className="skills-list">
-            <span>*Liste des compétences suggérée par l'ia</span>
+            <span>*Liste des compétences suggérées par l'ia</span>
             {skills.map((skill, index) => (
               <li key={index}>{skill.skill}</li>
             ))}

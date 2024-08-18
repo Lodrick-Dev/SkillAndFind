@@ -69,8 +69,8 @@ function App() {
 export default App;
 
 const StyledApp = styled.div`
-  /* background: ${COLORS.light}; */
   background: ${COLORS.dark};
+  /* background: ${COLORS.glob}; */
   padding: 0px 10px;
   /* height: 100vh; */
   position: relative;

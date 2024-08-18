@@ -87,7 +87,7 @@ const Home = () => {
           <div>
             <strong>Orientation Pro</strong>{" "}
             <span>
-              faites le grand saut, laissez vous guider dès maintenant
+              faites le grand saut et laissez vous guider dès maintenant
             </span>
           </div>
           <MdOutlinePublishedWithChanges className="icon" />
@@ -147,7 +147,7 @@ const StyledHome = styled.div`
       background: ${COLORS.yellow};
     }
     .btn-cv {
-      background: ${COLORS.purple};
+      background: ${COLORS.bluelow};
     }
     .btn-skills {
       background: ${COLORS.orange};
@@ -173,11 +173,11 @@ const StyledHome = styled.div`
         padding: 5px;
         width: 85%;
         strong {
-          color: ${COLORS.dark};
+          color: ${COLORS.glob};
           font-size: 1.3em;
         }
         span {
-          color: ${COLORS.dark};
+          color: ${COLORS.glob};
         }
       }
       .icon {

@@ -37,7 +37,7 @@ const StyledHeader = styled.header`
     color: ${COLORS.second};
   }
   h1 {
-    color: ${COLORS.second};
+    color: ${COLORS.light};
   }
   button {
     height: 5vh;
