@@ -122,7 +122,7 @@ const StyledResultFranceTravail = styled.div`
       position: relative;
       .li-description {
         margin: 10px 0px;
-        color: ${COLORS.second};
+        color: ${COLORS.light};
       }
       .go-see-link {
         position: absolute;

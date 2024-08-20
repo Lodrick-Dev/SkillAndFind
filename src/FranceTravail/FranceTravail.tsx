@@ -226,21 +226,20 @@ const StyledFranceTravail = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  width: 50%;
+  width: 70%;
   .search-and-list {
+    /* background: pink; */
+    width: 100%;
     span {
       color: ${COLORS.light};
       margin: 5px 0px;
     }
-    /* height: 7vh; */
     margin: 5px 0px;
-    width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     div {
-      background: green;
       width: 50%;
       position: relative;
       input {
@@ -263,9 +262,9 @@ const StyledFranceTravail = styled.div`
       }
     }
     .list-deroulant {
+      padding: 5px;
       position: relative;
-      width: 50%;
-      background: grey;
+      width: 100%;
       display: flex;
       justify-content: center;
       ul {
@@ -274,7 +273,7 @@ const StyledFranceTravail = styled.div`
         position: absolute;
         z-index: 10;
         top: 0px;
-        width: 100%;
+        width: 100% !important;
         display: flex;
         flex-direction: column;
         overflow-y: scroll;

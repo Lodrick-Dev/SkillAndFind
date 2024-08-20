@@ -144,7 +144,7 @@ const StyledResultCv = styled.div`
   height: 70vh;
   margin-top: 10px;
   p {
-    color: ${COLORS.second};
+    color: ${COLORS.yellow};
   }
   .div-transf {
     height: 70vh;
@@ -156,7 +156,7 @@ const StyledResultCv = styled.div`
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
-    width: 60%;
+    width: 80%;
     scrollbar-width: none;
     ::-webkit-scrollbar {
       display: none; /* Chrome, Safari, and Opera */
@@ -190,6 +190,9 @@ const StyledResultCv = styled.div`
         border-radius: 15px;
         cursor: pointer;
       }
+    }
+    .ul-list-sug-ia {
+      width: 100%;
     }
     .ul-list-sug-ia > .lil-header {
       display: flex;
